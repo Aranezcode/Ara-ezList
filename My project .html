@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+    <style>
+        /*  CSS styles  */
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+input[type="text"] {
+    width: 70%;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add a new task">
+        <button id="addTaskBtn">Add</button>
+        <ul id="taskList"></ul>
+        <button id="clearAllBtn">Clear All</button>
+    </div>
+    <script>
+        /* JavaScript code*/
+    document.addEventListener('DOMContentLoaded', function() {
+    const taskInput = document.getElementById('taskInput');
+    const addButton = document.getElementById('addButton');
+    const taskList = document.getElementById('taskList');
+    const clearButton = document.getElementById('clearButton');
+
+    addButton.addEventListener('click', addTask);
+    taskInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            addTask();
+        }
+    });
+
+    function addTask() {
+        const taskText = taskInput.value.trim();
+        if (taskText !== '') {
+            const li = document.createElement('li');
+            li.textContent = taskText;
+            li.addEventListener('click', toggleTask);
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', deleteTask);
+            li.appendChild(deleteButton);
+            taskList.appendChild(li);
+            taskInput.value = '';
+        }
+    }
+
+    function toggleTask() {
+        this.classList.toggle('completed');
+    }
+
+    function deleteTask() {
+        this.parentElement.remove();
+    }
+
+    clearButton.addEventListener('click', function() {
+        taskList.innerHTML = '';
+    });
+});
+
+    </script>
+</body>
+</html>
